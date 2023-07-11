@@ -6,6 +6,10 @@ import cv2
 import math
 import datetime
 
+camera=0 
+# camera = 0 -> default camera
+# camera = 1 -> external USB camera
+
 def face_confidence(face_distance, face_match_threshold=0.6):
     range = (1.0-face_match_threshold)
     linear_val = (1.0 - face_distance)/ (range*2.0)
@@ -38,7 +42,7 @@ class FaceRecognition:
         print(self.known_face_names)
 
     def run_recognition(self):
-        video_capture=cv2.VideoCapture(0)
+        video_capture=cv2.VideoCapture(camera)
 
         if not video_capture.isOpened():
             sys.exit('Video source not found...')
