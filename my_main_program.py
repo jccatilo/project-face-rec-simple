@@ -68,15 +68,18 @@ class FaceRecognition:
                     
                     face_distances = face_recognition.face_distance(self.known_face_enodings, face_encoding)
                     best_match_index = np.argmin(face_distances)
-
-                    if matches[best_match_index]:
-                        name = self.known_face_names[best_match_index]
-                        confidence = face_confidence(face_distances[best_match_index])
-                    else:
-                        cv2.imwrite('faces/{}.png'.format(datetime.datetime.now().strftime('%Y-%m-%d-%H%M')),frame)
-                        # fr = FaceRecognition()
-                        self.known_face_names.clear()
-                        self.encode_faces()
+                    try:
+                        if matches[best_match_index]:
+                            name = self.known_face_names[best_match_index]
+                            confidence = face_confidence(face_distances[best_match_index])
+                        else:
+                            cv2.imwrite('faces/{}.png'.format(datetime.datetime.now().strftime('%Y-%m-%d-%H%M')),frame)
+                            # fr = FaceRecognition()
+                            self.known_face_names.clear()
+                            self.encode_faces()
+                    except:
+                        pass
+                        
                     self.face_names.append(f'{name}({confidence})')
     
             self.process_current_frame = not self.process_current_frame
